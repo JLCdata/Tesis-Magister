@@ -155,6 +155,6 @@ def optimum_recommendation(df,range_hh_cc,pipe):
 #
     fig.update_layout(hovermode="x unified")                
 #
-#    fig.show()
+    #fig.show()
     
     return rec_hh_cc,tph_opt 
