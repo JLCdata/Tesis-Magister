@@ -138,10 +138,16 @@ def optimum_recommendation(df,range_hh_cc,pipe):
     
     list_TPH=np.array([tph_function(i,df,pipe) for i in range_hh_cc])
     
-    index_max=np.argmax(list_TPH)
+    #index_max=np.argmax(list_TPH)
+
+    # Maximo HH charge cell que maximiza TPH
+    winner = np.argwhere(list_TPH == np.amax(list_TPH))
+    index_max=max(winner.flatten().tolist())
+
     rec_hh_cc=range_hh_cc[index_max]
     tph_opt=list_TPH[index_max]
-    
+    #print("Recommendation: ",rec_hh_cc)
+    #print("TPH optimum: ",tph_opt)
     df_tph=pd.DataFrame({"TPH":list_TPH,"HH CC":range_hh_cc})
     
     fig = go.Figure()
@@ -150,11 +156,11 @@ def optimum_recommendation(df,range_hh_cc,pipe):
                         mode='lines+markers',
                         name='TPH'))
 #
-    fig.update_layout(height=500, width=1200, title_text="TPH vs HH charge cell" ,xaxis_title="HH charge cell",
+    fig.update_layout(height=500, width=1200, title_text=f"TPH vs HH charge cell: (Recommendation: {rec_hh_cc} & TPH optimum: {int(tph_opt)})" ,xaxis_title="HH charge cell",
         yaxis_title="TPH")   
 #
     fig.update_layout(hovermode="x unified")                
 #
     #fig.show()
     
-    return rec_hh_cc,tph_opt 
+    return rec_hh_cc,tph_opt,fig 
